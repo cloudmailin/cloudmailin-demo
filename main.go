@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/cloudmailin/cloudmailin-go"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
@@ -167,12 +168,8 @@ func (s *Server) handleEmails(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("Email:\n```\n%s\n```", string(data))
 
-	// Parse the email payload using inline struct
-	var email struct {
-		Headers struct {
-			Subject string `json:"subject"`
-		} `json:"headers"`
-	}
+	// Parse the email payload
+	var email cloudmailin.IncomingMail
 	if err := json.Unmarshal(data, &email); err != nil {
 		log.Printf("Error parsing email JSON: %v", err)
 		http.Error(w, "Error parsing email", http.StatusBadRequest)
@@ -182,20 +179,43 @@ func (s *Server) handleEmails(w http.ResponseWriter, r *http.Request) {
 	// Broadcast the raw data directly
 	s.broadcast <- data
 
-	// TODO: Send reply email using SMTP
-	log.Printf("Would send reply email using SMTP URL: %s", s.smtpUrl)
+	// Create CloudMailin client
+	client, err := cloudmailin.NewClientFromURL(s.smtpUrl)
+	if err != nil {
+		log.Printf("Error creating CloudMailin client: %v", err)
+		http.Error(w, "Error creating CloudMailin client", http.StatusInternalServerError)
+		return
+	}
+
+	// Prepare response email
+	message := &cloudmailin.OutboundMail{
+		To:      []string{email.Envelope.From},
+		From:    s.fromEmail,
+		Subject: "Re: " + email.Headers.Subject(),
+		Plain:   "Thank you for your email. This is an automated response.",
+	}
+
+	// Send the response email
+	_, err = client.SendMail(message)
+	if err != nil {
+		log.Printf("Error sending response email: %v", err)
+		http.Error(w, "Error sending response email", http.StatusInternalServerError)
+		return
+	}
 
 	// Create and send response
-	response := struct {
+	apiResponse := struct {
 		Status  string `json:"status"`
+		ID      string `json:"id"`
 		Subject string `json:"subject"`
 	}{
-		Status:  "ok",
-		Subject: email.Headers.Subject,
+		Status:  "Success",
+		ID:      message.ID,
+		Subject: email.Headers.Subject(),
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(response); err != nil {
+	if err := json.NewEncoder(w).Encode(apiResponse); err != nil {
 		log.Printf("Error encoding response: %v", err)
 		http.Error(w, "Error encoding response", http.StatusInternalServerError)
 		return
