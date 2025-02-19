@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+      <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">CloudMailin Demo</h1>
+
+      <!-- Main content box -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <p class="mb-6">
+          Send an email to this email address to see CloudMailin in action:
+          {{if .ForwardAddress}}
+          <a href="mailto:{{.ForwardAddress}}" class="text-blue-600 hover:text-blue-800 underline">{{.ForwardAddress}}</a>
+          {{else}}
+          <span class="text-amber-600">Not configured</span>
+          {{end}}
+        </p>
+
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Latest Email</h2>
+        <pre id="email-content" class="bg-gray-50 rounded p-4 font-mono text-sm whitespace-pre-wrap overflow-auto max-h-96">Webhook Connection Not Established, check the JS console and the logs of the server</pre>
+      </div>
+
+      <div class="mt-8 bg-gray-50 border border-gray-200 rounded-lg p-6">
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">Configuration</h2>
+        <div class="space-y-4">
+          <!-- Forward Address -->
+          <div class="flex items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-700">CLOUDMAILIN_FORWARD_ADDRESS:</h3>
+              <code class="text-sm font-mono {{if .ForwardAddress}}text-blue-600{{else}}text-amber-600{{end}}">
+                {{if .ForwardAddress}}{{.ForwardAddress}}{{else}}Not Set{{end}}
+              </code>
+            </div>
+            {{if not .ForwardAddress}}
+            <svg class="h-6 w-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            {{end}}
+          </div>
+
+          <!-- SMTP URL -->
+          <div class="flex items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-700">CLOUDMAILIN_SMTP_URL:</h3>
+              <code class="text-sm font-mono {{if .SmtpUrl}}text-blue-600{{else}}text-amber-600{{end}}">
+                {{if .SmtpUrl}}{{.SmtpUrl}}{{else}}Not Set{{end}}
+              </code>
+            </div>
+            {{if not .SmtpUrl}}
+            <svg class="h-6 w-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            {{end}}
+          </div>
+
+          <!-- FROM EMAIL -->
+          <div class="flex items-start">
+            <div class="flex-1">
+              <h3 class="font-medium text-gray-700">FROM_EMAIL:</h3>
+              <code class="text-sm font-mono {{if .FromEmail}}text-blue-600{{else}}text-amber-600{{end}}">
+                {{if .FromEmail}}{{.FromEmail}}{{else}}Not Set{{end}}
+              </code>
+            </div>
+            {{if not .FromEmail}}
+            <svg class="h-6 w-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            {{end}}
+          </div>
+
+          <!-- Webhook URL -->
+          <div>
+            <h3 class="font-medium text-gray-700">Webhook URL (setup the POST to here):</h3>
+            <div class="flex items-center space-x-2 mt-1">
+              <code id="webhook-url" class="flex-1 bg-gray-100 px-3 py-2 rounded text-gray-800 font-mono text-sm"></code>
+              <button onclick="copyWebhookUrl()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded text-sm">
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- README Section -->
+      <div class="mt-8 bg-gray-50 border border-gray-200 rounded-lg p-6">
+        <h2 class="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
+          <svg class="w-5 h-5" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+          </svg>
+          <a href="https://github.com/cloudmailin/cloudmailin-example/blob/main/README.md" target="_blank" class="hover:text-blue-600">README</a>
+        </h2>
+        <div class="prose prose-slate max-w-none max-h-96 overflow-y-auto">
+          {{.ReadmeContent}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${wsProtocol}//${window.location.host}/ws`);
+    const emailContent = document.getElementById('email-content');
+    const webhookUrl = document.getElementById('webhook-url');
+
+    // Set the webhook URL
+    webhookUrl.textContent = `${window.location.protocol}//${window.location.host}/emails`;
+
+    // Add ping interval to keep connection alive
+    let pingInterval;
+    function startPing() {
+      console.log('Starting ping');
+      // Send ping every 30 seconds (well before Heroku's 55-second timeout)
+      pingInterval = setInterval(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send('ping');
+        }
+      }, 30000);
+    }
+
+    function stopPing() {
+      console.log('Stopping ping');
+      if (pingInterval) {
+        clearInterval(pingInterval);
+      }
+    }
+
+    ws.onopen = function() {
+      console.log('WebSocket connection opened');
+      emailContent.textContent = 'Waiting for emails...';
+      startPing();
+    };
+
+    ws.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      console.log('Received message:', data);
+      emailContent.textContent = JSON.stringify(data, null, 2);
+    };
+
+    ws.onclose = function() {
+      console.log('WebSocket connection closed');
+      emailContent.textContent = 'WebSocket connection closed. Attempting to reconnect...';
+      stopPing();
+      // Attempt to reconnect after 3 seconds
+      setTimeout(() => {
+        console.log('Attempting to reload');
+        window.location.reload();
+      }, 3000);
+    };
+
+    ws.onerror = function() {
+      console.log('WebSocket error occurred');
+      emailContent.textContent = 'WebSocket error occurred. Please refresh the page.';
+    };
+
+    // Copy webhook URL function
+    function copyWebhookUrl() {
+      console.log('Copying webhook URL:', webhookUrl.textContent);
+      navigator.clipboard.writeText(webhookUrl.textContent)
+        .then(() => {
+          const button = webhookUrl.nextElementSibling;
+          const originalText = button.textContent;
+          button.textContent = 'Copied!';
+          setTimeout(() => {
+            button.textContent = originalText;
+          }, 2000);
+        })
+        .catch(err => console.error('Failed to copy:', err));
+    }
+  </script>
+</body>
+
+</html>
