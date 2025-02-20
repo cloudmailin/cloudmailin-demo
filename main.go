@@ -151,6 +151,14 @@ func (s *Server) handleWebSocket(ws *websocket.Conn) {
 func (s *Server) handleEmails(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Request] /emails")
 
+	// Check Content-Type header
+	contentType := r.Header.Get("Content-Type")
+	if contentType != "application/json" {
+		log.Printf("Invalid Content-Type: %s", contentType)
+		http.Error(w, "Content-Type must be application/json", http.StatusUnsupportedMediaType)
+		return
+	}
+
 	// Read the raw data from the request body
 	data, err := io.ReadAll(r.Body)
 	if err != nil {
