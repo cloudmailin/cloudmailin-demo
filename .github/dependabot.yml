@@ -18,3 +18,6 @@ updates:
     commit-message:
       prefix: 'deps'
       include: "scope"
+    ignore:
+      - dependency-name: "go"
+        versions: [">= 1.23"]
