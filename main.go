@@ -233,6 +233,11 @@ func main() {
 	forwardAddress := os.Getenv("CLOUDMAILIN_FORWARD_ADDRESS")
 	smtpUrl := os.Getenv("CLOUDMAILIN_SMTP_URL")
 	fromEmail := os.Getenv("FROM_EMAIL")
+	if fromEmail == "" {
+		// We can use an example.com domain if the system is in test mode
+		fromEmail = "example@example.com"
+		log.Printf("WARNING: FROM_EMAIL is not set, using %s", fromEmail)
+	}
 	// Create and start the server
 	server := newServer(forwardAddress, smtpUrl, fromEmail)
 	go server.run()
