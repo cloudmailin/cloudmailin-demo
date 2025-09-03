@@ -20,7 +20,7 @@ It provides:
 * Simple web interface with Tailwind CSS
 * Docker for development
 
-> The application is built to use at least version 1.22+ of Go.
+> The application is built to use at least version 1.23+ of Go.
 
 ## Getting Started
 
@@ -52,7 +52,7 @@ The application requires the following environment variables:
 The application runs in a devcontainer for vs-code / cursor etc. just open
 the folder and > Reopen in Container.
 
-The application is built to use at least version 1.22+ of Go.
+The application is built to use at least version 1.23+ of Go.
 
 ## Docker
 
