@@ -1,5 +1,5 @@
-github.com/cloudmailin/cloudmailin-go v0.3.0 h1:4+5UGpqmMfnlBLphvzgeWt5KP/EZ+PJf17SpMRA1NdQ=
-github.com/cloudmailin/cloudmailin-go v0.3.0/go.mod h1:M3KaAFBiwikcamYa/q3TVV0EMDKkNgzBCvFlBQDTPIo=
+github.com/cloudmailin/cloudmailin-go v0.3.1 h1:9s4anO5g9ej4H0t+LEopnMD6LS1nntxzwrse85cuhto=
+github.com/cloudmailin/cloudmailin-go v0.3.1/go.mod h1:M3KaAFBiwikcamYa/q3TVV0EMDKkNgzBCvFlBQDTPIo=
 github.com/gomarkdown/markdown v0.0.0-20250810172220-2e2c11897d1a h1:l7A0loSszR5zHd/qK53ZIHMO8b3bBSmENnQ6eKnUT0A=
 github.com/gomarkdown/markdown v0.0.0-20250810172220-2e2c11897d1a/go.mod h1:JDGcbDT52eL4fju3sZ4TeHGsQwhG9nbDV21aMyhwPoA=
 github.com/google/go-cmp v0.5.6 h1:BKbKCqvP6I+rmFHt06ZmyQtvB8xAkWdhFyr0ZUNZcxQ=
