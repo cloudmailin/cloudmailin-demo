@@ -1,9 +1,9 @@
-github.com/cloudmailin/cloudmailin-go v0.3.1 h1:9s4anO5g9ej4H0t+LEopnMD6LS1nntxzwrse85cuhto=
-github.com/cloudmailin/cloudmailin-go v0.3.1/go.mod h1:M3KaAFBiwikcamYa/q3TVV0EMDKkNgzBCvFlBQDTPIo=
-github.com/gomarkdown/markdown v0.0.0-20250810172220-2e2c11897d1a h1:l7A0loSszR5zHd/qK53ZIHMO8b3bBSmENnQ6eKnUT0A=
-github.com/gomarkdown/markdown v0.0.0-20250810172220-2e2c11897d1a/go.mod h1:JDGcbDT52eL4fju3sZ4TeHGsQwhG9nbDV21aMyhwPoA=
+github.com/cloudmailin/cloudmailin-go v0.3.2 h1:VMMOs0HjwvmakNU18SlU1npaIq+1E5NzGjajcakVT+w=
+github.com/cloudmailin/cloudmailin-go v0.3.2/go.mod h1:M3KaAFBiwikcamYa/q3TVV0EMDKkNgzBCvFlBQDTPIo=
+github.com/gomarkdown/markdown v0.0.0-20260614204949-e08cff860f76 h1:Ltt9ldIaSYEsjA7sPY2c8r9dOmnKM1vlzhh3dxlhBHM=
+github.com/gomarkdown/markdown v0.0.0-20260614204949-e08cff860f76/go.mod h1:JDGcbDT52eL4fju3sZ4TeHGsQwhG9nbDV21aMyhwPoA=
 github.com/google/go-cmp v0.5.6 h1:BKbKCqvP6I+rmFHt06ZmyQtvB8xAkWdhFyr0ZUNZcxQ=
 github.com/google/go-cmp v0.5.6/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
-golang.org/x/net v0.51.0 h1:94R/GTO7mt3/4wIKpcR5gkGmRLOuE/2hNGeWq/GBIFo=
-golang.org/x/net v0.51.0/go.mod h1:aamm+2QF5ogm02fjy5Bb7CQ0WMt1/WVM7FtyaTLlA9Y=
+golang.org/x/net v0.57.0 h1:K5+3DljvIuDG9/Jv9rvyMywYNFCQ9RSUY6OOTTkT+tE=
+golang.org/x/net v0.57.0/go.mod h1:KpXc8iv+r3XplLAG/f7Jsf9RPszJzdR0f58q9vGOuEU=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
